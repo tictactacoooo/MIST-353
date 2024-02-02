@@ -1,0 +1,82 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiking Search</title>
+</head>
+<body>
+    <div id="geolocationDisplay" style="padding: 10px; border: 1px solid #ccc; margin-bottom: 20px;">
+        <h3>Current Geolocation:</h3>
+        <p id="geolocationInfo">Loading...</p>
+    </div>
+
+    <form id="locationForm">
+        <label for="LocationID">Where do you want to hike?</label>
+        <input type="text" id="LocationID" name="location" />
+        <button type="submit">Search</button>
+    </form>
+
+    <form id="nearMeForm">
+        <label>Hikes near me</label>
+        <button id="nearMeButton" type="button">Find Hikes Near Me</button>
+    </form>
+
+    <script>
+        // Function to display current geolocation
+        function displayGeolocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            document.getElementById('geolocationInfo').innerHTML = 'Latitude: ' + latitude + '<br>Longitude: ' + longitude;
+        }
+
+        // Function to handle errors in geolocation
+        function displayGeolocationError(error) {
+            document.getElementById('geolocationInfo').innerHTML = 'Error getting geolocation: ' + error.message;
+        }
+
+        // Get current geolocation when the page loads
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(displayGeolocation, displayGeolocationError);
+        } else {
+            document.getElementById('geolocationInfo').innerHTML = 'Geolocation is not supported by this browser.';
+        }
+
+        // Function to handle form submission for specific location
+        document.getElementById('locationForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the location entered by the user
+            var location = document.getElementById('LocationID').value;
+
+            // Redirect user to search results page with the specific location data
+            window.location.href = 'search_results?location=' + encodeURIComponent(location);
+        });
+
+        // Function to handle finding hikes near the user's location
+        document.getElementById('nearMeButton').addEventListener('click', function () {
+            // Check if geolocation is supported
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+
+                    // Redirect user to search results page with geolocation data
+                    window.location.href = 'search_results?lat=' + latitude + '&lon=' + longitude;
+                }, function (error) {
+                    console.log('Error getting geolocation:', error);
+                    alert('Error getting geolocation. Please try again later.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        });
+    </script>
+</body>
+</html>
