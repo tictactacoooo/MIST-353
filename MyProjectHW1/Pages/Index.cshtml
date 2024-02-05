@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hiking Search</title>
+    <link rel="stylesheet" href="indexstyles.css">
 </head>
 <body>
     <div id="geolocationDisplay" style="padding: 10px; border: 1px solid #ccc; margin-bottom: 20px;">
@@ -18,8 +19,13 @@
     </div>
 
     <form id="locationForm">
-        <label for="LocationID">Where do you want to hike?</label>
-        <input type="text" id="LocationID" name="location" />
+        <!-- Use a div to contain the label and input -->
+        <div id="locationContainer">
+            <!-- Initially, the label is inside the input box -->
+            <input type="text" id="LocationID" name="location" placeholder="Where do you want to hike?" />
+            <!-- Hidden label with an ID -->
+            <label for="LocationID" id="locationLabel">Where do you want to hike?</label>
+        </div>
         <button type="submit">Search</button>
     </form>
 
@@ -48,33 +54,19 @@
             document.getElementById('geolocationInfo').innerHTML = 'Geolocation is not supported by this browser.';
         }
 
-        // Function to handle form submission for specific location
-        document.getElementById('locationForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent default form submission
+        // Get the input and label elements
+        var locationInput = document.getElementById('LocationID');
+        var locationLabel = document.getElementById('locationLabel');
 
-            // Get the location entered by the user
-            var location = document.getElementById('LocationID').value;
-
-            // Redirect user to search results page with the specific location data
-            window.location.href = 'search_results?location=' + encodeURIComponent(location);
+        // When the input box is clicked, hide the label
+        locationInput.addEventListener('click', function () {
+            locationLabel.style.display = 'none';
         });
 
-        // Function to handle finding hikes near the user's location
-        document.getElementById('nearMeButton').addEventListener('click', function () {
-            // Check if geolocation is supported
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
-
-                    // Redirect user to search results page with geolocation data
-                    window.location.href = 'search_results?lat=' + latitude + '&lon=' + longitude;
-                }, function (error) {
-                    console.log('Error getting geolocation:', error);
-                    alert('Error getting geolocation. Please try again later.');
-                });
-            } else {
-                alert('Geolocation is not supported by this browser.');
+        // When the input box is blurred (loses focus) and is empty, show the label again
+        locationInput.addEventListener('blur', function () {
+            if (locationInput.value === '') {
+                locationLabel.style.display = 'block';
             }
         });
     </script>

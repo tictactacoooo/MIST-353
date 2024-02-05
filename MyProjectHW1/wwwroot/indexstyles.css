@@ -1,0 +1,55 @@
+﻿/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFFF0; /*Ivory*/
+    color: #694507; /*Chocolate Brown*/
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#geolocationDisplay {
+    background-color: #9DC183; /*Sage Green*/
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #9DC183; /*Sage Green*/
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #9DC183; /*Sage Green*/
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    button:hover {
+        background-color: #034006; /*Emerald Green*/
+    }
