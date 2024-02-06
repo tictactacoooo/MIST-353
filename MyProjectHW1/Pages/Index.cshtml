@@ -70,5 +70,37 @@
             }
         });
     </script>
+    <script>
+        // Function to handle form submission for specific location
+        document.getElementById('locationForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the location entered by the user
+            var location = document.getElementById('LocationID').value;
+
+            // Redirect user to search_results page with the specific location data
+            window.location.href = 'search_results?location=' + encodeURIComponent(location);
+        });
+
+        // Function to handle finding hikes near the user's location
+        document.getElementById('nearMeButton').addEventListener('click', function () {
+            // Check if geolocation is supported
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+
+                    // Redirect user to search_results page with geolocation data
+                    window.location.href = 'search_results?lat=' + latitude + '&lon=' + longitude;
+                }, function (error) {
+                    console.log('Error getting geolocation:', error);
+                    alert('Error getting geolocation. Please try again later.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        });
+    </script>
+
 </body>
 </html>
