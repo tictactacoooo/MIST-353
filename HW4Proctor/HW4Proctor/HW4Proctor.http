@@ -1,0 +1,6 @@
+@HW4Proctor_HostAddress = http://localhost:5152
+
+GET {{HW4Proctor_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
